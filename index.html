@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>inxai — Coming Soon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Inter:wght@300;400;500&family=Nunito:wght@700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --purple:      #3b2de8;
+      --orange:      #ff5a1f;
+      --white:       #ffffff;
+      --white-muted: rgba(255,255,255,0.55);
+      --line:        rgba(255,255,255,0.07);
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--purple);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 39px,
+        var(--line) 39px,
+        var(--line) 40px
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; bottom: 0;
+      left: clamp(60px, 8vw, 100px);
+      width: 1px;
+      background: rgba(255, 90, 31, 0.3);
+      z-index: 0;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem clamp(80px, 12vw, 140px);
+      animation: page-in 0.6s ease both;
+    }
+
+    @keyframes page-in {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── LOGO ── */
+    .logo-wrap {
+      align-self: flex-start;
+      margin-bottom: 3.5rem;
+      opacity: 0;
+      animation: fade-up 0.6s ease 0.3s forwards;
+    }
+
+    /* Recreate the logo using the same visual style:
+       purple pill background, orange text, white x */
+    .logo-box {
+      background: var(--purple);
+      border: 2.5px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 10px 22px;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .logo-text {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: var(--orange);
+      position: relative;
+    }
+
+    /* The dot on i characters */
+    .logo-text .i-letter {
+      position: relative;
+      display: inline-block;
+    }
+
+    /* White X overlay on the x character */
+    .logo-text .x-letter {
+      position: relative;
+      display: inline-block;
+      color: var(--orange);
+    }
+
+    .logo-text .x-letter::after {
+      content: 'x';
+      position: absolute;
+      inset: 0;
+      color: var(--white);
+      clip-path: polygon(30% 0%, 70% 0%, 50% 42%, 70% 100%, 30% 100%, 50% 58%);
+    }
+
+    /* ── HEADLINE ── */
+    .headline-wrap {
+      align-self: flex-start;
+      margin-bottom: 2.5rem;
+    }
+
+    .coming-soon {
+      font-family: 'Caveat', cursive;
+      font-weight: 700;
+      font-size: clamp(4.5rem, 11vw, 9rem);
+      line-height: 0.95;
+      color: var(--white);
+      position: relative;
+      display: inline-block;
+    }
+
+    .coming-soon .accent { color: var(--orange); }
+
+    .coming-soon .text-inner {
+      display: inline-block;
+      animation: text-loop 4.5s ease-in-out 0.8s infinite;
+    }
+
+    @keyframes text-loop {
+      0%   { opacity: 0; transform: translateY(8px); }
+      12%  { opacity: 1; transform: translateY(0); }
+      72%  { opacity: 1; transform: translateY(0); }
+      90%  { opacity: 0; transform: translateY(-8px); }
+      100% { opacity: 0; transform: translateY(-8px); }
+    }
+
+    .coming-soon svg {
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 100%;
+      height: 18px;
+      overflow: visible;
+    }
+
+    .coming-soon svg path {
+      fill: none;
+      stroke: var(--orange);
+      stroke-width: 3.5;
+      stroke-linecap: round;
+      stroke-dasharray: 900;
+      stroke-dashoffset: 900;
+      animation: draw-erase 4.5s ease-in-out 0.8s infinite;
+    }
+
+    @keyframes draw-erase {
+      0%   { stroke-dashoffset: 900; opacity: 0; }
+      10%  { opacity: 1; }
+      28%  { stroke-dashoffset: 0; }
+      72%  { stroke-dashoffset: 0; opacity: 1; }
+      90%  { stroke-dashoffset: 900; opacity: 0; }
+      100% { stroke-dashoffset: 900; opacity: 0; }
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 3px;
+      height: clamp(3rem, 8vw, 6.5rem);
+      background: var(--orange);
+      margin-left: 6px;
+      vertical-align: middle;
+      animation: blink 1s step-end infinite;
+      border-radius: 2px;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    .subtext {
+      font-family: 'Caveat', cursive;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      color: var(--white-muted);
+      margin-bottom: 3rem;
+      align-self: flex-start;
+      opacity: 0;
+      transform: translateY(8px);
+      animation: fade-up 0.7s ease 1.8s forwards;
+    }
+
+    @keyframes fade-up {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .contact {
+      align-self: flex-start;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      opacity: 0;
+      animation: fade-up 0.7s ease 2.2s forwards;
+    }
+
+    .contact-label {
+      font-family: 'Caveat', cursive;
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: var(--white-muted);
+    }
+
+    .contact a {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(0.8rem, 1.4vw, 0.95rem);
+      font-weight: 500;
+      color: var(--orange);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,90,31,0.3);
+      padding-bottom: 1px;
+      transition: border-color 0.2s;
+    }
+
+    .contact a:hover { border-color: var(--orange); }
+
+    .doodle {
+      position: fixed;
+      bottom: 2.5rem;
+      right: clamp(2rem, 5vw, 4rem);
+      opacity: 0;
+      animation: fade-up 0.7s ease 2.6s forwards;
+    }
+
+    .doodle-inner {
+      font-family: 'Caveat', cursive;
+      font-size: clamp(0.85rem, 1.5vw, 1rem);
+      color: var(--white-muted);
+      transform: rotate(-4deg);
+      display: block;
+      text-align: right;
+      line-height: 1.6;
+    }
+
+    .page-num {
+      position: fixed;
+      bottom: 2rem;
+      left: clamp(60px, 8vw, 100px);
+      transform: translateX(-50%);
+      font-family: 'Caveat', cursive;
+      font-size: 1rem;
+      color: var(--white-muted);
+      opacity: 0.4;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; }
+      .coming-soon svg path { stroke-dashoffset: 0; }
+      .coming-soon .text-inner,
+      .logo-wrap, .subtext, .contact, .doodle { opacity: 1; transform: none; }
+    }
+
+    @media (max-width: 600px) {
+      body::after { left: 40px; }
+      .page { padding: 2rem 56px; }
+      .page-num { left: 40px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+
+    <!-- Logo: actual image file placed by developer, fallback text version -->
+    <div class="logo-wrap">
+      <!-- Replace src with actual logo path once deployed -->
+      <img src="logo.png"
+           alt="inxai"
+           style="height: clamp(44px, 6vw, 64px); width: auto;"
+           onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='inline-block';" />
+      <!-- Fallback if image not found -->
+      <div id="logo-fallback" style="display:none;">
+        <div class="logo-box">
+          <span class="logo-text">
+            <span class="i-letter">i</span>n<span class="x-letter">x</span>a<span class="i-letter">i</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="headline-wrap">
+      <h1 class="coming-soon">
+        <span class="text-inner">coming<br/><span class="accent">soon</span></span><span class="cursor"></span>
+        <svg viewBox="0 0 400 18" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M4 12 Q100 4 200 12 Q300 20 396 10"/>
+        </svg>
+      </h1>
+    </div>
+
+    <p class="subtext">We're crafting something worth the wait&nbsp;✦</p>
+
+    <div class="contact">
+      <span class="contact-label">say hello →</span>
+      <a href="mailto:info@inxai.net">info@inxai.net</a>
+    </div>
+
+  </main>
+
+  <div class="doodle">
+    <span class="doodle-inner">
+      big things,<br/>
+      small steps.
+    </span>
+  </div>
+
+  <span class="page-num">1</span>
+</body>
+</html>
